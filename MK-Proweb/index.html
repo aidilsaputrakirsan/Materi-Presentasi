@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengenalan Web Development</title>
+    
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/monokai.min.css">
+    
+    <style>
+        .reveal section img {
+            border: none;
+            box-shadow: none;
+            margin: 20px 0;
+        }
+        .custom-title {
+            font-size: 2.5em;
+            color: #fff;
+        }
+        .diagram {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .highlight-box {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .text-left {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Cover Slide -->
+            <section>
+                <h1 class="custom-title">Pengenalan Web Development</h1>
+                <h3>Pertemuan 1</h3>
+                <div class="highlight-box">
+                    <p>Frontend vs Backend Development</p>
+                    <p>Client-Server Architecture</p>
+                    <p>Development Tools & Environment Setup</p>
+                </div>
+            </section>
+
+            <!-- Tujuan Pembelajaran -->
+            <section>
+                <h2>Tujuan Pembelajaran</h2>
+                <div class="text-left">
+                    <ul>
+                        <li>Memahami konsep dasar frontend vs backend</li>
+                        <li>Memahami alur kerja aplikasi web berbasis client-server</li>
+                        <li>Mempersiapkan lingkungan kerja development</li>
+                        <li>Memulai pembagian tim dan peran</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Frontend vs Backend -->
+            <section>
+                <section>
+                    <h2>Frontend vs Backend</h2>
+                    <div class="grid">
+                        <div>
+                            <h3>Frontend</h3>
+                            <ul>
+                                <li>User Interface (UI)</li>
+                                <li>User Experience (UX)</li>
+                                <li>Client-side Logic</li>
+                                <li>React.js, HTML, CSS</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Backend</h3>
+                            <ul>
+                                <li>Server Logic</li>
+                                <li>Database Management</li>
+                                <li>API Development</li>
+                                <li>Laravel, PHP, MySQL</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Frontend Technologies</h2>
+                    <div class="diagram">
+                        <img src="/api/placeholder/800/400" alt="Frontend Stack Diagram">
+                    </div>
+                    <ul>
+                        <li>HTML5: Structure</li>
+                        <li>CSS3: Styling</li>
+                        <li>JavaScript/React: Interactivity</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Backend Technologies</h2>
+                    <div class="diagram">
+                        <img src="/api/placeholder/800/400" alt="Backend Stack Diagram">
+                    </div>
+                    <ul>
+                        <li>Laravel Framework</li>
+                        <li>PHP Programming</li>
+                        <li>MySQL Database</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- Client-Server Workflow -->
+            <section>
+                <section>
+                    <h2>Client-Server Workflow</h2>
+                    <div class="diagram">
+                        <img src="/api/placeholder/800/400" alt="Client Server Architecture">
+                    </div>
+                </section>
+
+                <section>
+                    <h2>HTTP Request-Response Cycle</h2>
+                    <pre><code class="javascript">
+// Frontend API Request Example
+fetch('/api/users')
+    .then(response => response.json())
+    .then(data => console.log(data));</code></pre>
+                    <pre><code class="php">
+// Backend API Response Example
+public function getUsers() {
+    return response()->json([
+        'users' => User::all()
+    ]);</code></pre>
+                </section>
+            </section>
+
+            <!-- Development Tools -->
+            <section>
+                <section>
+                    <h2>Development Tools</h2>
+                    <div class="highlight-box">
+                        <h3>Essential Tools</h3>
+                        <ul>
+                            <li>Node.js & npm</li>
+                            <li>Git & GitHub</li>
+                            <li>VS Code Editor</li>
+                            <li>Laravel Framework</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Installation Steps</h2>
+                    <div class="text-left">
+                        <p>1. Install Node.js:</p>
+                        <pre><code>https://nodejs.org/</code></pre>
+                        <p>2. Install Git:</p>
+                        <pre><code>https://git-scm.com/</code></pre>
+                        <p>3. Install Laravel via Composer:</p>
+                        <pre><code>composer global require laravel/installer</code></pre>
+                    </div>
+                </section>
+            </section>
+
+            <!-- RESTful API -->
+            <section>
+                <section>
+                    <h2>RESTful API Basics</h2>
+                    <div class="highlight-box">
+                        <ul>
+                            <li>GET: Read data</li>
+                            <li>POST: Create data</li>
+                            <li>PUT/PATCH: Update data</li>
+                            <li>DELETE: Remove data</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>API Example</h2>
+                    <pre><code class="javascript">// Frontend API Call
+const createUser = async (userData) => {
+    const response = await fetch('/api/users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    });
+    return response.json();
+};</code></pre>
+                </section>
+            </section>
+
+            <!-- Team Roles -->
+            <section>
+                <h2>Team Roles & Responsibilities</h2>
+                <div class="grid">
+                    <div>
+                        <h3>Frontend Developer</h3>
+                        <ul>
+                            <li>UI Implementation</li>
+                            <li>React Components</li>
+                            <li>State Management</li>
+                            <li>API Integration</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Backend Developer</h3>
+                        <ul>
+                            <li>API Development</li>
+                            <li>Database Design</li>
+                            <li>Business Logic</li>
+                            <li>Security Implementation</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Closing -->
+            <section>
+                <h2>Terima Kasih!</h2>
+                <div class="highlight-box">
+                    <p>Pertanyaan?</p>
+                    <p>Referensi & Resources akan dibagikan</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Reveal.js JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.js"></script>
+    
+    <!-- Syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    
+    <!-- Initialize -->
+    <script>
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            center: true,
+            hash: true,
+            transition: 'slide',
+            // Plugins configuration
+            plugins: [
+                // Add plugins if needed
+            ]
+        });
+
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+    </script>
+</body>
+</html>
