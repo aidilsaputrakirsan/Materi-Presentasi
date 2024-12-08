@@ -3,95 +3,35 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Presentasi Reveal.js</title>
-    
-    <!-- Reveal.js CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
-    
-    <style>
-        .reveal section img {
-            border: none;
-            box-shadow: none;
-        }
-        .custom-title {
-            font-size: 2.5em;
-            color: #fff;
-        }
-    </style>
+    <title>Materi Perkuliahan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
 </head>
-<body>
-    <div class="reveal">
-        <div class="slides">
-            <!-- Slide 1 -->
-            <section>
-                <h1 class="custom-title">Selamat Datang</h1>
-                <h3>Presentasi dengan Reveal.js</h3>
-                <p>Tekan <strong>Space</strong> atau gunakan tombol panah untuk navigasi</p>
-            </section>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Materi Perkuliahan</h1>
+            <p class="text-gray-600">Kumpulan Materi Pembelajaran</p>
+        </header>
 
-            <!-- Slide 2 -->
-            <section>
-                <h2>Apa itu Reveal.js?</h2>
-                <ul>
-                    <li>Framework presentasi HTML</li>
-                    <li>Mendukung HTML & Markdown</li>
-                    <li>Animasi yang menarik</li>
-                    <li>Responsif di semua perangkat</li>
-                </ul>
-            </section>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Card MK Pemrograman Web -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Pemrograman Web</h2>
+                    <p class="text-gray-600 mb-4">Frontend & Backend Development</p>
+                    <a href="MK-Proweb/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Lihat Materi</a>
+                </div>
+            </div>
 
-            <!-- Slide 3 -->
-            <section>
-                <h2>Fitur-Fitur Utama</h2>
-                <section>
-                    <h3>Navigasi Vertikal</h3>
-                    <p>Tekan tombol panah bawah untuk melihat sub-slide</p>
-                </section>
-                <section>
-                    <h3>Sub-slide 1</h3>
-                    <p>Ini adalah contoh navigasi vertikal</p>
-                </section>
-                <section>
-                    <h3>Sub-slide 2</h3>
-                    <p>Anda bisa membuat banyak sub-slide</p>
-                </section>
-            </section>
-
-            <!-- Slide 4 -->
-            <section data-background="#007acc">
-                <h2>Latar Belakang Kustom</h2>
-                <p>Anda dapat mengubah warna atau gambar latar belakang</p>
-            </section>
-
-            <!-- Slide 5 -->
-            <section>
-                <h2>Demo Kode</h2>
-                <pre><code class="hljs" data-trim>
-function helloWorld() {
-    console.log("Hello, Reveal.js!");
-}
-                </code></pre>
-            </section>
-
-            <!-- Slide 6 -->
-            <section>
-                <h2>Terima Kasih!</h2>
-                <p>Mulai buat presentasi Anda sendiri</p>
-            </section>
+            <!-- Template untuk Mata Kuliah Lain -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden opacity-50">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Mata Kuliah Lain</h2>
+                    <p class="text-gray-600 mb-4">Akan datang</p>
+                    <button class="inline-block bg-gray-500 text-white px-4 py-2 rounded" disabled>Segera Hadir</button>
+                </div>
+            </div>
         </div>
     </div>
-
-    <!-- Reveal.js JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.js"></script>
-    <script>
-        Reveal.initialize({
-            controls: true,
-            progress: true,
-            center: true,
-            hash: true,
-            transition: 'slide',
-        });
-    </script>
 </body>
 </html>
