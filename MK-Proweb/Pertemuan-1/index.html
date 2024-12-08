@@ -22,7 +22,7 @@
             margin: 20px 0;
         }
         .custom-title {
-            font-size: 2em;
+            font-size: 1.8em;
             color: #fff;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
@@ -359,6 +359,32 @@ const tambahPengguna = async (dataPengguna) => {
             const currentSlide = Reveal.getSlidePastCount();
             const progress = (currentSlide / totalSlides) * 100;
             progressBar.style.width = `${progress}%`;
+        });
+
+          // Event handler untuk memperbesar kode
+          document.querySelectorAll('.code-preview').forEach(preview => {
+            preview.addEventListener('click', () => {
+                const code = preview.querySelector('code').innerText;
+                const modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = '50%';
+                modal.style.left = '50%';
+                modal.style.transform = 'translate(-50%, -50%)';
+                modal.style.background = '#fff';
+                modal.style.padding = '20px';
+                modal.style.borderRadius = '8px';
+                modal.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.5)';
+                modal.style.zIndex = '9999';
+                modal.innerHTML = `
+                    <pre><code>${code}</code></pre>
+                    <button style="margin-top: 10px;">Tutup</button>
+                `;
+                document.body.appendChild(modal);
+
+                modal.querySelector('button').addEventListener('click', () => {
+                    modal.remove();
+                });
+            });
         });
     </script>
 </body>
