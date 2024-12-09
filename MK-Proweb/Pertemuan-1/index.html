@@ -7,28 +7,41 @@
     
     <!-- Reveal.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css">
+    <!-- Menggunakan tema blood untuk tampilan yang lebih elegant -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/blood.min.css">
     
-    <!-- Font Awesome untuk ikon -->
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <!-- Syntax highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/monokai.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css">
     
     <style>
-        .reveal section img {
-            border: none;
-            box-shadow: none;
+        :root {
+            --main-font: 'Poppins', sans-serif;
+        }
+        
+        .reveal {
+            font-family: var(--main-font);
+        }
+        
+        .reveal h1, .reveal h2, .reveal h3 {
+            font-family: var(--main-font);
+            text-transform: none;
+            letter-spacing: normal;
         }
         
         .title-main {
             font-size: 48px !important;
+            font-weight: 600 !important;
             margin-bottom: 20px !important;
         }
         
         .title-sub {
             font-size: 32px !important;
-            color: #cccccc !important;
+            color: #ff9999 !important;
+            font-weight: 300 !important;
         }
         
         .highlight-box {
@@ -36,26 +49,44 @@
             padding: 20px;
             border-radius: 10px;
             margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .illustration-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
         }
         
         .illustration-image {
-            max-width: 400px;
-            max-height: 250px;
-            margin: 20px auto;
-            display: block;
+            max-width: 100px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .illustration-image:hover {
+            transform: scale(1.1);
+        }
+        
+        .code-container {
+            position: relative;
+            margin: 20px 0;
         }
         
         .code-preview {
             background: #282c34;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
             margin: 10px 0;
-            cursor: pointer;
-            transition: transform 0.3s ease;
+            cursor: zoom-in;
+            transition: all 0.3s ease;
+            position: relative;
         }
         
         .code-preview:hover {
-            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
         }
         
         .code-preview.zoomed {
@@ -68,6 +99,7 @@
             overflow-y: auto;
             z-index: 1000;
             padding: 30px;
+            cursor: zoom-out;
         }
         
         .zoom-overlay {
@@ -79,15 +111,43 @@
             bottom: 0;
             background: rgba(0,0,0,0.9);
             z-index: 999;
+            cursor: zoom-out;
         }
         
         .watermark {
             position: fixed;
-            bottom: 10px;
-            right: 10px;
+            bottom: 15px;
+            right: 15px;
             font-size: 12px;
             color: rgba(255,255,255,0.3);
             z-index: 1000;
+            font-style: italic;
+        }
+        
+        .text-left {
+            text-align: left !important;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .feature-list li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        
+        /* Custom animation for fragments */
+        .reveal .slides section .fragment.fade-up {
+            opacity: 0;
+            transform: translate3d(0, 20px, 0);
+        }
+        
+        .reveal .slides section .fragment.fade-up.visible {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
         }
     </style>
 </head>
@@ -96,7 +156,7 @@
     <div class="reveal">
         <div class="slides">
             <!-- Cover Slide -->
-            <section>
+            <section data-background-gradient="linear-gradient(to bottom right, #600, #300)">
                 <h1 class="title-main">Pengenalan Web Development</h1>
                 <h3 class="title-sub">Pertemuan 1</h3>
                 <div class="highlight-box">
@@ -106,90 +166,200 @@
                 </div>
             </section>
 
+            <!-- Tujuan Pembelajaran -->
+            <section>
+                <section>
+                    <h2>Tujuan Pembelajaran</h2>
+                    <div class="highlight-box text-left">
+                        <ul class="feature-list">
+                            <li class="fragment fade-up">Memahami konsep dasar frontend vs backend</li>
+                            <li class="fragment fade-up">Memahami alur kerja aplikasi web berbasis client-server</li>
+                            <li class="fragment fade-up">Mempersiapkan lingkungan kerja development</li>
+                            <li class="fragment fade-up">Memulai pembagian tim dan peran</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
             <!-- Frontend vs Backend -->
             <section>
-                <h2>Frontend vs Backend</h2>
-                <div class="illustration-image">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="Frontend" style="height: 100px; margin: 10px;">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="Frontend" style="height: 100px; margin: 10px;">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="Frontend" style="height: 100px; margin: 10px;">
-                </div>
+                <section>
+                    <h2>Frontend vs Backend</h2>
+                    <div class="grid-2">
+                        <div class="highlight-box">
+                            <h3><i class="fas fa-paint-brush"></i> Frontend</h3>
+                            <ul class="feature-list">
+                                <li>Antarmuka Pengguna (UI)</li>
+                                <li>Pengalaman Pengguna (UX)</li>
+                                <li>Logika Client-side</li>
+                                <li>React.js, HTML, CSS</li>
+                            </ul>
+                        </div>
+                        <div class="highlight-box">
+                            <h3><i class="fas fa-database"></i> Backend</h3>
+                            <ul class="feature-list">
+                                <li>Logika Server</li>
+                                <li>Manajemen Database</li>
+                                <li>Pengembangan API</li>
+                                <li>Laravel, PHP, MySQL</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                
+                <section>
+                    <h2>Client-Server Workflow</h2>
+                    <div class="highlight-box text-left">
+                        <p>Browser (client) mengirim permintaan (request) ke server, server mengirim respons. 
+                        Proses ini dapat melibatkan pertukaran data JSON melalui RESTful API.</p>
+                    </div>
+                    <div class="illustration-container">
+                        <img class="illustration-image fragment fade-up" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="Frontend">
+                        <i class="fas fa-arrows-left-right"></i>
+                        <img class="illustration-image fragment fade-up" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Backend">
+                    </div>
+                </section>
             </section>
 
-            <!-- Arsitektur -->
+            <!-- Tools Development -->
             <section>
-                <h2>Arsitektur Client-Server</h2>
-                <div class="illustration-image">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Server" style="height: 100px; margin: 10px;">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="Database" style="height: 100px; margin: 10px;">
-                </div>
+                <section>
+                    <h2>Tools Development</h2>
+                    <div class="illustration-container">
+                        <div class="highlight-box fragment fade-up">
+                            <i class="fab fa-node fa-3x"></i>
+                            <h4>Node.js & npm</h4>
+                        </div>
+                        <div class="highlight-box fragment fade-up">
+                            <i class="fab fa-git-alt fa-3x"></i>
+                            <h4>Git & GitHub</h4>
+                        </div>
+                        <div class="highlight-box fragment fade-up">
+                            <i class="fab fa-laravel fa-3x"></i>
+                            <h4>Laravel</h4>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Langkah Instalasi</h2>
+                    <div class="text-left">
+                        <div class="code-container">
+                            <div class="code-preview">
+                                <h4>1. Install Node.js:</h4>
+                                <pre><code>https://nodejs.org/</code></pre>
+                            </div>
+                            <div class="code-preview">
+                                <h4>2. Install Git:</h4>
+                                <pre><code>https://git-scm.com/</code></pre>
+                            </div>
+                            <div class="code-preview">
+                                <h4>3. Install Laravel via Composer:</h4>
+                                <pre><code>composer global require laravel/installer</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </section>
 
-            <!-- Code Example -->
+            <!-- API Examples -->
             <section>
-                <h2>Contoh Request-Response</h2>
-                <div class="code-preview">
-                    <pre><code class="javascript">// Contoh Request dari Frontend
+                <section>
+                    <h2>RESTful API Basics</h2>
+                    <div class="highlight-box">
+                        <ul class="feature-list">
+                            <li class="fragment fade-up">GET: Membaca data</li>
+                            <li class="fragment fade-up">POST: Membuat data baru</li>
+                            <li class="fragment fade-up">PUT/PATCH: Memperbarui data</li>
+                            <li class="fragment fade-up">DELETE: Menghapus data</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Contoh Request-Response</h2>
+                    <div class="code-container">
+                        <div class="code-preview">
+                            <pre><code class="javascript">// Contoh Request dari Frontend
 fetch('/api/pengguna')
     .then(response => response.json())
     .then(data => {
         console.log('Data Pengguna:', data);
     });</code></pre>
-                </div>
-                <div class="code-preview">
-                    <pre><code class="php">// Contoh Response dari Backend
+                        </div>
+                        <div class="code-preview">
+                            <pre><code class="php">// Contoh Response dari Backend
 public function getPengguna() {
     return response()->json([
         'pengguna' => Pengguna::all()
     ]);</code></pre>
-                </div>
+                        </div>
+                    </div>
+                </section>
             </section>
         </div>
     </div>
 
-    <!-- Reveal.js JavaScript -->
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
-    
-    <!-- Syntax highlighting -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize Reveal.js
             Reveal.initialize({
+                hash: true,
+                // Mengaktifkan navigasi vertikal
+                embedded: false,
+                margin: 0.1,
+                // Transisi
+                transition: 'slide',
+                // Konfigurasi Fragment
+                fragments: true,
+                fragmentInURL: true,
+                // Tampilan
                 controls: true,
                 progress: true,
                 center: true,
-                hash: true,
-                transition: 'slide'
+                // Plugin
+                dependencies: [
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
             });
 
-            // Initialize syntax highlighting
-            hljs.highlightAll();
-
-            // Setup code zoom functionality
+            // Zoom functionality
             const codeBlocks = document.querySelectorAll('.code-preview');
             const overlay = document.createElement('div');
             overlay.className = 'zoom-overlay';
             document.body.appendChild(overlay);
 
+            function toggleZoom(block) {
+                const isZoomed = block.classList.toggle('zoomed');
+                overlay.style.display = isZoomed ? 'block' : 'none';
+                block.style.cursor = isZoomed ? 'zoom-out' : 'zoom-in';
+            }
+
             codeBlocks.forEach(block => {
-                block.addEventListener('click', function() {
-                    if (!this.classList.contains('zoomed')) {
-                        this.classList.add('zoomed');
-                        overlay.style.display = 'block';
-                    } else {
-                        this.classList.remove('zoomed');
-                        overlay.style.display = 'none';
-                    }
+                block.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleZoom(block);
                 });
             });
 
-            overlay.addEventListener('click', function() {
+            overlay.addEventListener('click', () => {
                 const zoomedBlock = document.querySelector('.code-preview.zoomed');
                 if (zoomedBlock) {
-                    zoomedBlock.classList.remove('zoomed');
-                    overlay.style.display = 'none';
+                    toggleZoom(zoomedBlock);
+                }
+            });
+
+            // Escape key to exit zoom
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    const zoomedBlock = document.querySelector('.code-preview.zoomed');
+                    if (zoomedBlock) {
+                        toggleZoom(zoomedBlock);
+                    }
                 }
             });
         });
