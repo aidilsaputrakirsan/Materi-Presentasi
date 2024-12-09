@@ -74,34 +74,53 @@
                 </section>
 
                 <section>
-                    <h2>State Management Example</h2>
+                    <h2>Contoh State Management</h2>
                     <div class="code-container">
                         <div class="code-preview">
-                            <pre><code class="javascript">function UserForm() {
+                            <pre><code class="javascript">// Komponen Form Pendaftaran Pengguna
+function FormPendaftaran() {
+  // State untuk menyimpan data form
   const [formData, setFormData] = useState({
-    name: '',
-    email: ''
+    nama: '',
+    email: '',
+    telepon: ''
   });
 
-  const handleChange = (e) => {
+  // Handler untuk mengupdate state saat input berubah
+  const handlePerubahan = (e) => {
     setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
+      ...formData, // Pertahankan nilai lama
+      [e.target.name]: e.target.value // Update nilai yang berubah
     });
   };
 
+  // Handler untuk submit form
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Mencegah refresh halaman
+    // Proses data form
+    console.log('Data yang dikirim:', formData);
+  };
+
   return (
-    &lt;form&gt;
-      &lt;input
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-      /&gt;
-      &lt;input
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-      /&gt;
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;div&gt;
+        &lt;label&gt;Nama:&lt;/label&gt;
+        &lt;input
+          name="nama"
+          value={formData.nama}
+          onChange={handlePerubahan}
+        /&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;label&gt;Email:&lt;/label&gt;
+        &lt;input
+          name="email"
+          type="email"
+          value={formData.email}
+          onChange={handlePerubahan}
+        /&gt;
+      &lt;/div&gt;
+      &lt;button type="submit"&gt;Daftar&lt;/button&gt;
     &lt;/form&gt;
   );
 }</code></pre>
@@ -109,7 +128,347 @@
                     </div>
                 </section>
 
-                <!-- [Rest of the content sections...] -->
+                <section>
+                    <h2>Contoh Penggunaan Props</h2>
+                    <div class="code-container">
+                        <div class="code-preview">
+                            <pre><code class="javascript">// Komponen Induk/Parent
+function DaftarPengguna() {
+  // Data pengguna yang akan diteruskan sebagai props
+  const pengguna = [
+    { id: 1, nama: 'Budi', email: 'budi@email.com' },
+    { id: 2, nama: 'Ani', email: 'ani@email.com' }
+  ];
+
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;Daftar Pengguna&lt;/h2&gt;
+      {/* Meneruskan data sebagai props */}
+      &lt;TabelPengguna 
+        dataPengguna={pengguna} 
+        judul="Pengguna Aktif"
+      /&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Komponen Anak/Child yang menerima props
+function TabelPengguna({ dataPengguna, judul }) {
+  return (
+    &lt;div&gt;
+      &lt;h3&gt;{judul}&lt;/h3&gt;
+      &lt;table&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Nama&lt;/th&gt;
+            &lt;th&gt;Email&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          {dataPengguna.map(user => (
+            &lt;tr key={user.id}&gt;
+              &lt;td&gt;{user.nama}&lt;/td&gt;
+              &lt;td&gt;{user.email}&lt;/td&gt;
+            &lt;/tr&gt;
+          ))}
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Laravel Database & Migration -->
+            <section>
+                <section>
+                    <h2>Laravel Database & Migrasi</h2>
+                    <div class="highlight-box">
+                        <h3><i class="fas fa-database"></i> Konsep Dasar</h3>
+                        <ul class="feature-list">
+                            <li class="fragment fade-up">Migrasi: Version control untuk struktur database</li>
+                            <li class="fragment fade-up">Eloquent ORM: Object Relational Mapping untuk akses database</li>
+                            <li class="fragment fade-up">Model: Representasi tabel dalam bentuk class PHP</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Contoh Migrasi Database</h2>
+                    <div class="code-container">
+                        <div class="code-preview">
+                            <pre><code class="php">// database/migrations/create_pengguna_table.php
+
+class CreatePenggunaTable extends Migration
+{
+    public function up()
+    {
+        // Membuat struktur tabel
+        Schema::create('pengguna', function (Blueprint $table) {
+            $table->id(); // Primary key auto-increment
+            $table->string('nama', 100); // Kolom nama, maksimal 100 karakter
+            $table->string('email')->unique(); // Email harus unik
+            $table->string('password');
+            $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
+            $table->timestamps(); // Created_at & Updated_at
+        });
+    }
+
+    public function down()
+    {
+        // Menghapus tabel saat rollback
+        Schema::dropIfExists('pengguna');
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Contoh Model Eloquent</h2>
+                    <div class="code-container">
+                        <div class="code-preview">
+                            <pre><code class="php">// app/Models/Pengguna.php
+
+class Pengguna extends Model
+{
+    // Tentukan kolom yang bisa diisi massal
+    protected $fillable = [
+        'nama', 
+        'email', 
+        'password',
+        'status'
+    ];
+
+    // Kolom yang disembunyikan saat dijadikan JSON/Array
+    protected $hidden = [
+        'password'
+    ];
+
+    // Contoh relasi dengan model Profil
+    public function profil()
+    {
+        return $this->hasOne(Profil::class);
+    }
+}
+
+// Contoh penggunaan model
+class PenggunaController extends Controller
+{
+    // Mengambil semua pengguna
+    public function index()
+    {
+        $pengguna = Pengguna::all();
+        return response()->json($pengguna);
+    }
+
+    // Membuat pengguna baru
+    public function store(Request $request)
+    {
+        $pengguna = Pengguna::create([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+        return response()->json($pengguna, 201);
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Form Interaktif -->
+            <section>
+                <section>
+                    <h2>Form Interaktif di React</h2>
+                    <div class="highlight-box">
+                        <h3><i class="fas fa-keyboard"></i> Fitur Form</h3>
+                        <ul class="feature-list">
+                            <li>Validasi Input</li>
+                            <li>Handling Error</li>
+                            <li>Submit Form dengan API</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Contoh Form Lengkap</h2>
+                    <div class="code-container">
+                        <div class="code-preview">
+                            <pre><code class="javascript">// Form Pendaftaran dengan Validasi
+function FormPendaftaranLengkap() {
+  // State untuk data form dan error
+  const [formData, setFormData] = useState({
+    nama: '',
+    email: '',
+    password: '',
+    konfirmasiPassword: ''
+  });
+  const [errors, setErrors] = useState({});
+
+  // Fungsi validasi form
+  const validasiForm = () => {
+    const errorBaru = {};
+    
+    // Validasi nama
+    if (!formData.nama.trim()) {
+      errorBaru.nama = 'Nama harus diisi';
+    }
+
+    // Validasi email
+    if (!formData.email.includes('@')) {
+      errorBaru.email = 'Email tidak valid';
+    }
+
+    // Validasi password
+    if (formData.password.length < 6) {
+      errorBaru.password = 'Password minimal 6 karakter';
+    }
+
+    // Validasi konfirmasi password
+    if (formData.password !== formData.konfirmasiPassword) {
+      errorBaru.konfirmasiPassword = 'Password tidak cocok';
+    }
+
+    setErrors(errorBaru);
+    return Object.keys(errorBaru).length === 0;
+  };
+
+  // Handler submit form
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (validasiForm()) {
+      try {
+        const response = await fetch('/api/pendaftaran', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+          alert('Pendaftaran berhasil!');
+        } else {
+          alert('Terjadi kesalahan');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  };
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;div&gt;
+        &lt;label&gt;Nama:&lt;/label&gt;
+        &lt;input
+          name="nama"
+          value={formData.nama}
+          onChange={(e) => setFormData({
+            ...formData,
+            nama: e.target.value
+          })}
+        /&gt;
+        {errors.nama && &lt;span className="error"&gt;{errors.nama}&lt;/span&gt;}
+      &lt;/div&gt;
+
+      {/* Input lainnya dengan pola yang sama */}
+      
+      &lt;button type="submit"&gt;Daftar&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- CRUD dengan Eloquent -->
+            <section>
+                <section>
+                    <h2>CRUD dengan Eloquent</h2>
+                    <div class="highlight-box text-left">
+                        <ul class="feature-list">
+                            <li class="fragment fade-up"><strong>Create:</strong> Model::create($data)</li>
+                            <li class="fragment fade-up"><strong>Read:</strong> Model::find($id) atau Model::all()</li>
+                            <li class="fragment fade-up"><strong>Update:</strong> $model->update($data)</li>
+                            <li class="fragment fade-up"><strong>Delete:</strong> $model->delete()</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Contoh CRUD Lengkap</h2>
+                    <div class="code-container">
+                        <div class="code-preview">
+                            <pre><code class="php">// PenggunaController.php
+
+class PenggunaController extends Controller
+{
+    /**
+     * Mengambil semua data pengguna
+     */
+    public function index()
+    {
+        $pengguna = Pengguna::all();
+        return response()->json($pengguna);
+    }
+
+    /**
+     * Menyimpan pengguna baru
+     */
+    public function store(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'nama' => 'required|min:3',
+            'email' => 'required|email|unique:pengguna',
+            'password' => 'required|min:6'
+        ]);
+
+        // Buat pengguna baru
+        $pengguna = Pengguna::create([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+
+        return response()->json($pengguna, 201);
+    }
+
+    /**
+     * Mengupdate data pengguna
+     */
+    public function update(Request $request, $id)
+    {
+        // Cari pengguna
+        $pengguna = Pengguna::findOrFail($id);
+
+        // Update data
+        $pengguna->update($request->all());
+
+        return response()->json($pengguna);
+    }
+
+    /**
+     * Menghapus data pengguna
+     */
+    public function destroy($id)
+    {
+        $pengguna = Pengguna::findOrFail($id);
+        $pengguna->delete();
+
+        return response()->json(null, 204);
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
             </section>
         </div>
     </div>
