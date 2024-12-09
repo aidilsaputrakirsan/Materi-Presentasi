@@ -22,10 +22,19 @@
             margin: 20px 0;
         }
         .custom-title {
-            font-size: 1.8em;
+            font-size: 1.2em;
             color: #fff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            margin-bottom: 0.5em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            margin-bottom: 0.8em;
+            line-height: 1.4;
+        }
+        .title-slide h1 {
+            font-size: 3em;
+            margin-bottom: 0.3em;
+        }
+        .title-slide h3 {
+            font-size: 1.5em;
+            color: #ddd;
         }
         .watermark {
             position: fixed;
@@ -41,10 +50,49 @@
             margin-bottom: 1em;
         }
         .illustration-image {
-            max-width: 80%;
+            max-width: 50%;
+            max-height: 300px;
             margin: 20px auto;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            object-fit: contain;
+        }
+        
+        .code-container {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .code-preview {
+            transition: transform 0.3s ease;
+        }
+        
+        .code-preview.zoomed {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.5);
+            z-index: 1000;
+            width: 80vw;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        
+        .code-preview:not(.zoomed):hover {
+            transform: scale(1.05);
+        }
+        
+        .zoom-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 999;
         }
         .diagram {
             background: rgba(255,255,255,0.1);
@@ -352,6 +400,34 @@ const tambahPengguna = async (dataPengguna) => {
     
     <!-- Initialize -->
     <script>
+        // Fungsi untuk zoom kode
+        document.addEventListener('DOMContentLoaded', function() {
+            const codeBlocks = document.querySelectorAll('.code-preview');
+            const overlay = document.createElement('div');
+            overlay.className = 'zoom-overlay';
+            document.body.appendChild(overlay);
+
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', function() {
+                    if (!this.classList.contains('zoomed')) {
+                        this.classList.add('zoomed');
+                        overlay.style.display = 'block';
+                    } else {
+                        this.classList.remove('zoomed');
+                        overlay.style.display = 'none';
+                    }
+                });
+            });
+
+            overlay.addEventListener('click', function() {
+                const zoomedBlock = document.querySelector('.code-preview.zoomed');
+                if (zoomedBlock) {
+                    zoomedBlock.classList.remove('zoomed');
+                    overlay.style.display = 'none';
+                }
+            });
+        });
+
         Reveal.initialize({
             controls: true,
             progress: true,
