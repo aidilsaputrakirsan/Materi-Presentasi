@@ -36,14 +36,41 @@
                 </div>
             </div>
 
-            <!-- Template untuk Pertemuan Lain (disabled) -->
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden opacity-50">
+            <!-- Pertemuan 3 sampai 16 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 3-16</h2>
-                    <p class="text-gray-600 mb-4">Akan datang</p>
-                    <button class="inline-block bg-gray-500 text-white px-4 py-2 rounded" disabled>Segera</button>
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 3</h2>
+                    <p class="text-gray-600 mb-4">HTML dan CSS Dasar</p>
+                    <a href="Pertemuan-3/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
                 </div>
             </div>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 4</h2>
+                    <p class="text-gray-600 mb-4">JavaScript Dasar</p>
+                    <a href="Pertemuan-4/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 5</h2>
+                    <p class="text-gray-600 mb-4">Pemrograman Berbasis DOM</p>
+                    <a href="Pertemuan-5/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
+                </div>
+            </div>
+
+            <!-- Tambahkan div untuk pertemuan 6 hingga 16 -->
+            ${Array.from({ length: 11 }, (_, i) => `
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan ${i + 6}</h2>
+                        <p class="text-gray-600 mb-4">Topik Pertemuan ${i + 6}</p>
+                        <a href="Pertemuan-${i + 6}/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
+                    </div>
+                </div>
+            `).join('')}
         </div>
     </div>
 </body>
