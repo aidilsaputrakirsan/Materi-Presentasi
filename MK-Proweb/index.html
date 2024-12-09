@@ -18,140 +18,49 @@
         </header>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Pertemuan 1 -->
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 1</h2>
-                    <p class="text-gray-600 mb-4">Pengenalan Web Development</p>
-                    <a href="Pertemuan-1/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
+            <!-- Loop untuk Pertemuan 1-16 -->
+            ${Array.from({ length: 16 }, (_, i) => `
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan ${i + 1}</h2>
+                        <p class="text-gray-600 mb-4">${getTopic(i + 1)}</p>
+                        <a href="Pertemuan-${i + 1}/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Pertemuan 2 -->
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 2</h2>
-                    <p class="text-gray-600 mb-4">Frontend Development</p>
-                    <a href="Pertemuan-2/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            <!-- Pertemuan 3 sampai 16 -->
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 3</h2>
-                    <p class="text-gray-600 mb-4">HTML dan CSS Dasar</p>
-                    <a href="Pertemuan-3/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 4</h2>
-                    <p class="text-gray-600 mb-4">JavaScript Dasar</p>
-                    <a href="Pertemuan-4/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 5</h2>
-                    <p class="text-gray-600 mb-4">Pemrograman Berbasis DOM</p>
-                    <a href="Pertemuan-5/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 6</h2>
-                    <p class="text-gray-600 mb-4">Pemrograman Berbasis DOM</p>
-                    <a href="Pertemuan-5/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 7</h2>
-                    <p class="text-gray-600 mb-4">Pemrograman Berbasis DOM</p>
-                    <a href="Pertemuan-5/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 8</h2>
-                    <p class="text-gray-600 mb-4">Pemrograman Berbasis DOM</p>
-                    <a href="Pertemuan-5/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 9</h2>
-                    <p class="text-gray-600 mb-4">Pemrograman Berbasis DOM</p>
-                    <a href="Pertemuan-5/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 10</h2>
-                    <p class="text-gray-600 mb-4">Pemrograman Berbasis DOM</p>
-                    <a href="Pertemuan-5/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 11</h2>
-                    <p class="text-gray-600 mb-4">Pemrograman Berbasis DOM</p>
-                    <a href="Pertemuan-5/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 12</h2>
-                    <p class="text-gray-600 mb-4">Pemrograman Berbasis DOM</p>
-                    <a href="Pertemuan-5/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden"></div>
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 13</h2>
-                    <p class="text-gray-600 mb-4">Pemrograman Berbasis DOM</p>
-                    <a href="Pertemuan-5/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden"></div>
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 14</h2>
-                    <p class="text-gray-600 mb-4">Pemrograman Berbasis DOM</p>
-                    <a href="Pertemuan-5/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden"></div>
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 15</h2>
-                    <p class="text-gray-600 mb-4">Pemrograman Berbasis DOM</p>
-                    <a href="Pertemuan-5/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden"></div>
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-2">Pertemuan 16</h2>
-                    <p class="text-gray-600 mb-4">Pemrograman Berbasis DOM</p>
-                    <a href="Pertemuan-5/index.html" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Materi</a>
-                </div>
-            </div>
-
-            
-                
+            `).join('')}
         </div>
     </div>
+
+    <script>
+        // Fungsi untuk menentukan topik berdasarkan pertemuan
+        function getTopic(pertemuan) {
+            switch (pertemuan) {
+                case 1:
+                    return 'Pengenalan Web Development';
+                case 2:
+                    return 'Frontend Development';
+                case 3:
+                    return 'HTML dan CSS Dasar';
+                case 4:
+                    return 'JavaScript Dasar';
+                case 5:
+                    return 'Pemrograman Berbasis DOM';
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                case 11:
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                case 16:
+                    return 'Pemrograman Berbasis DOM';
+                default:
+                    return 'Topik Belum Ditentukan';
+            }
+        }
+    </script>
 </body>
 </html>
