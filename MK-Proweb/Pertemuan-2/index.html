@@ -1,203 +1,392 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dasar-dasar React.js & Laravel</title>
+    
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css" id="theme">
+    
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css">
+    
     <style>
-        .watermark {
-            text-align: center;
-            font-size: 0.8em;
-            color: #666;
-            margin: 20px 0;
+        :root {
+            --main-font: 'Poppins', sans-serif;
         }
         
-        .title-main {
-            font-size: 2.5em;
-            color: #2c3e50;
-            text-align: center;
+        .reveal {
+            font-family: var(--main-font);
+            font-size: 22px;
         }
         
-        .title-sub {
-            font-size: 1.8em;
-            color: #34495e;
-            text-align: center;
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: var(--main-font);
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .reveal h1.title-main {
+            font-size: 52px !important;
+            font-weight: 600 !important;
+            margin-bottom: 20px !important;
+        }
+        
+        .reveal h3.title-sub {
+            font-size: 32px !important;
+            color: #FF9999 !important;
+            font-weight: 300 !important;
         }
         
         .highlight-box {
-            background-color: #f8f9fa;
-            border-radius: 8px;
+            background: rgba(255,255,255,0.08);
             padding: 20px;
-            margin: 15px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .text-left {
-            text-align: left;
-        }
-        
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            border-radius: 10px;
             margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.2);
         }
         
         .illustration-container {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
+            align-items: center;
+            gap: 40px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .illustration-image {
+            max-width: 80px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .illustration-image:hover {
+            transform: scale(1.1);
         }
         
         .code-container {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
+            position: relative;
+            margin: 20px 0;
         }
         
         .code-preview {
-            background: #fff;
-            padding: 15px;
+            background: #282c34;
+            padding: 20px;
+            border-radius: 8px;
             margin: 10px 0;
-            border-radius: 4px;
-            border: 1px solid #e9ecef;
+            cursor: zoom-in;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .code-preview:hover {
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+        
+        .code-preview.zoomed {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            max-height: 80vh;
+            overflow-y: auto;
+            z-index: 1000;
+            padding: 30px;
+            cursor: zoom-out;
+        }
+        
+        .zoom-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 999;
+            cursor: zoom-out;
+        }
+        
+        .watermark {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.3);
+            z-index: 1000;
+            font-style: italic;
+        }
+        
+        .text-left {
+            text-align: left !important;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .feature-list li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .illustration-container {
+                flex-direction: column;
+            }
+            .reveal h1.title-main {
+                font-size: 36px !important;
+            }
+            .reveal h3.title-sub {
+                font-size: 24px !important;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="watermark">
-        © 2024 Aidil Saputra Kirsan
-    </div>
-
-    <section>
-        <h1 id="dasar-reactjs-laravel" class="title-main">Dasar-dasar React.js & Laravel</h1>
-        <h3 id="pertemuan-2" class="title-sub">Pertemuan 2</h3>
-        
-        <div class="highlight-box">
-            <p>Konsep Dasar React.js</p>
-            <p>Struktur Dasar Laravel</p>
-            <p>Praktik Frontend & Backend</p>
-        </div>
-    </section>
-
-    <section>
-        <h2>Tujuan Pembelajaran</h2>
-        <div class="highlight-box text-left">
-            <ul>
-                <li>Memahami konsep dasar React.js (komponen, JSX, state awal)</li>
-                <li>Memahami struktur dasar aplikasi Laravel (MVC)</li>
-                <li>Membuat halaman frontend sederhana dengan React.js</li>
-                <li>Membuat route sederhana dan controller di Laravel untuk backend</li>
-            </ul>
-        </div>
-    </section>
-
-    <section>
-        <h2>React.js Basics</h2>
-        <div class="highlight-box">
-            <h3>Komponen</h3>
-            <div class="code-preview">
-                <pre><code>// Contoh Komponen React
-function Welcome(props) {
-  return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;;
-}</code></pre>
-            </div>
-            
-            <h3>JSX</h3>
-            <div class="code-preview">
-                <pre><code>const element = (
-  &lt;div&gt;
-    &lt;h1&gt;Welcome&lt;/h1&gt;
-    &lt;p&gt;JSX memudahkan penulisan UI&lt;/p&gt;
-  &lt;/div&gt;
-);</code></pre>
-            </div>
-            
-            <h3>State</h3>
-            <div class="code-preview">
-                <pre><code>const [count, setCount] = useState(0);</code></pre>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <h2>Laravel Basics</h2>
-        <div class="grid-2">
-            <div class="highlight-box">
-                <h3>MVC Pattern</h3>
-                <ul>
-                    <li><strong>Model:</strong> Pengelolaan data & logika bisnis</li>
-                    <li><strong>View:</strong> Tampilan untuk pengguna</li>
-                    <li><strong>Controller:</strong> Mengatur alur aplikasi</li>
-                </ul>
-            </div>
-            <div class="highlight-box">
-                <h3>Routing</h3>
-                <div class="code-preview">
-                    <pre><code>Route::get('/users', [
-    UserController::class, 
-    'index'
-]);</code></pre>
+    <div class="watermark">© 2024 Aidil Saputra Kirsan</div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Cover Slide -->
+            <section>
+                <h1 class="title-main">Dasar-dasar React.js & Laravel</h1>
+                <h3 class="title-sub">Pertemuan 2</h3>
+                <div class="highlight-box">
+                    <p><i class="fab fa-react"></i> Konsep Dasar React.js</p>
+                    <p><i class="fab fa-laravel"></i> Struktur Dasar Laravel</p>
+                    <p><i class="fas fa-code"></i> Implementasi Frontend & Backend</p>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <section>
-        <h2>Contoh Implementasi React.js</h2>
-        <div class="code-container">
-            <div class="code-preview">
-                <pre><code>// Counter Component
+            <!-- Tujuan Pembelajaran -->
+            <section>
+                <section>
+                    <h2>Tujuan Pembelajaran</h2>
+                    <div class="highlight-box text-left">
+                        <ul class="feature-list">
+                            <li class="fragment fade-up">Memahami konsep dasar React.js (komponen, JSX, state awal)</li>
+                            <li class="fragment fade-up">Memahami struktur dasar aplikasi Laravel (MVC)</li>
+                            <li class="fragment fade-up">Membuat halaman frontend sederhana dengan React.js</li>
+                            <li class="fragment fade-up">Membuat route sederhana dan controller di Laravel untuk backend</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- React.js Basics -->
+            <section>
+                <section>
+                    <h2>React.js Basics</h2>
+                    <div class="grid-2">
+                        <div class="highlight-box">
+                            <h3><i class="fas fa-puzzle-piece"></i> Komponen</h3>
+                            <p>Potongan UI yang dapat digunakan kembali</p>
+                        </div>
+                        <div class="highlight-box">
+                            <h3><i class="fas fa-code"></i> JSX</h3>
+                            <p>Sintaks mirip HTML di dalam JavaScript</p>
+                        </div>
+                    </div>
+                    <div class="highlight-box fragment fade-up">
+                        <h3><i class="fas fa-database"></i> State</h3>
+                        <p>Data internal yang mempengaruhi tampilan komponen</p>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Contoh Komponen React</h2>
+                    <div class="code-container">
+                        <div class="code-preview">
+                            <pre><code class="javascript">function Welcome(props) {
+  return (
+    &lt;div className="welcome"&gt;
+      &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;
+      &lt;p&gt;Welcome to our app!&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>State Management</h2>
+                    <div class="code-container">
+                        <div class="code-preview">
+                            <pre><code class="javascript">import { useState } from 'react';
+
 function Counter() {
   const [count, setCount] = useState(0);
   
   return (
     &lt;div&gt;
       &lt;p&gt;Count: {count}&lt;/p&gt;
-      &lt;button onClick={() => 
-        setCount(count + 1)}&gt;
+      &lt;button onClick={() => setCount(count + 1)}&gt;
         Increment
       &lt;/button&gt;
     &lt;/div&gt;
   );
 }</code></pre>
-            </div>
-        </div>
-    </section>
+                        </div>
+                    </div>
+                </section>
+            </section>
 
-    <section>
-        <h2>Contoh Implementasi Laravel</h2>
-        <div class="code-container">
-            <div class="code-preview">
-                <pre><code>// UserController.php
-public function index()
+            <!-- Laravel Basics -->
+            <section>
+                <section>
+                    <h2>Laravel Basics (MVC)</h2>
+                    <div class="grid-2">
+                        <div class="highlight-box">
+                            <h3><i class="fas fa-database"></i> Model</h3>
+                            <ul class="feature-list">
+                                <li>Representasi data</li>
+                                <li>Interaksi dengan database</li>
+                                <li>Logika bisnis</li>
+                            </ul>
+                        </div>
+                        <div class="highlight-box">
+                            <h3><i class="fas fa-desktop"></i> View</h3>
+                            <ul class="feature-list">
+                                <li>Tampilan untuk user</li>
+                                <li>Template Blade</li>
+                                <li>Response JSON untuk API</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="highlight-box fragment fade-up">
+                        <h3><i class="fas fa-cogs"></i> Controller</h3>
+                        <ul class="feature-list">
+                            <li>Mengatur alur aplikasi</li>
+                            <li>Memproses request</li>
+                            <li>Mengembalikan response</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Routing di Laravel</h2>
+                    <div class="code-container">
+                        <div class="code-preview">
+                            <pre><code class="php">// routes/api.php
+Route::get('/users', [UserController::class, 'index']);
+Route::post('/users', [UserController::class, 'store']);
+Route::put('/users/{id}', [UserController::class, 'update']);
+Route::delete('/users/{id}', [UserController::class, 'destroy']);</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Controller Example</h2>
+                    <div class="code-container">
+                        <div class="code-preview">
+                            <pre><code class="php">class UserController extends Controller
 {
-    $users = User::all();
-    return response()->json($users);
-}</code></pre>
-            </div>
-            <div class="code-preview">
-                <pre><code>// routes/api.php
-Route::get('/users', [
-    UserController::class, 
-    'index'
-]);</code></pre>
-            </div>
-        </div>
-    </section>
+    public function index()
+    {
+        $users = User::all();
+        return response()->json($users);
+    }
 
-    <section>
-        <h2>Integrasi Frontend-Backend</h2>
-        <div class="highlight-box text-left">
-            <h3>Alur Kerja:</h3>
-            <ol>
-                <li>React Component membuat HTTP request ke Laravel endpoint</li>
-                <li>Laravel Controller memproses request</li>
-                <li>Controller mengembalikan response JSON</li>
-                <li>React Component memperbarui UI berdasarkan response</li>
-            </ol>
+    public function store(Request $request)
+    {
+        $user = User::create($request->all());
+        return response()->json($user, 201);
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Integration -->
+            <section>
+                <h2>Integrasi Frontend-Backend</h2>
+                <div class="highlight-box text-left">
+                    <h3>Alur Kerja:</h3>
+                    <ul class="feature-list">
+                        <li class="fragment fade-up">React Component membuat HTTP request ke Laravel endpoint</li>
+                        <li class="fragment fade-up">Laravel Controller memproses request</li>
+                        <li class="fragment fade-up">Controller mengembalikan response JSON</li>
+                        <li class="fragment fade-up">React Component memperbarui UI berdasarkan response</li>
+                    </ul>
+                </div>
+            </section>
+
         </div>
-    </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Reveal.js
+            Reveal.initialize({
+                hash: true,
+                margin: 0.1,
+                transition: 'slide', 
+                fragments: true,
+                fragmentInURL: true,
+                controls: true,
+                progress: true,
+                center: true
+            });
+
+            // Highlight.js
+            hljs.highlightAll();
+
+            // Zoom functionality
+            const codeBlocks = document.querySelectorAll('.code-preview');
+            const overlay = document.createElement('div');
+            overlay.className = 'zoom-overlay';
+            document.body.appendChild(overlay);
+
+            function toggleZoom(block) {
+                const isZoomed = block.classList.toggle('zoomed');
+                overlay.style.display = isZoomed ? 'block' : 'none';
+                block.style.cursor = isZoomed ? 'zoom-out' : 'zoom-in';
+            }
+
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleZoom(block);
+                });
+            });
+
+            overlay.addEventListener('click', () => {
+                const zoomedBlock = document.querySelector('.code-preview.zoomed');
+                if (zoomedBlock) {
+                    toggleZoom(zoomedBlock);
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    const zoomedBlock = document.querySelector('.code-preview.zoomed');
+                    if (zoomedBlock) {
+                        toggleZoom(zoomedBlock);
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
