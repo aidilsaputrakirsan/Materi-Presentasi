@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Management dan Database</title>
+    
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css" id="theme">
+    
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css">
+    
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="watermark">© 2024 Aidil Saputra Kirsan</div>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Cover Slide -->
+            <section>
+                <h1 class="title-main">State Management dan Database</h1>
+                <h3 class="title-sub">Pertemuan 3</h3>
+                <div class="highlight-box">
+                    <p><i class="fab fa-react"></i> React State & Props</p>
+                    <p><i class="fas fa-database"></i> Database & Migrasi Laravel</p>
+                    <p><i class="fas fa-exchange-alt"></i> Form Interaktif & CRUD</p>
+                </div>
+            </section>
+
+            <!-- Tujuan Pembelajaran -->
+            <section>
+                <section>
+                    <h2>Tujuan Pembelajaran</h2>
+                    <div class="highlight-box text-left">
+                        <ul class="feature-list">
+                            <li class="fragment fade-up">Memahami konsep state dan props di React untuk mengelola data di komponen</li>
+                            <li class="fragment fade-up">Memahami konsep database dan migrasi di Laravel</li>
+                            <li class="fragment fade-up">Membuat form interaktif di React (stateful component)</li>
+                            <li class="fragment fade-up">Menggunakan Eloquent ORM di Laravel untuk operasi CRUD sederhana</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- React State & Props -->
+            <section>
+                <section>
+                    <h2>React State & Props</h2>
+                    <div class="grid-2">
+                        <div class="highlight-box">
+                            <h3><i class="fas fa-box"></i> State</h3>
+                            <ul class="feature-list">
+                                <li>Data internal komponen</li>
+                                <li>Dapat berubah seiring waktu</li>
+                                <li>Memicu render ulang</li>
+                            </ul>
+                        </div>
+                        <div class="highlight-box">
+                            <h3><i class="fas fa-arrow-down"></i> Props</h3>
+                            <ul class="feature-list">
+                                <li>Data dari komponen induk</li>
+                                <li>Read-only</li>
+                                <li>Mempengaruhi render</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>State Management Example</h2>
+                    <div class="code-container">
+                        <div class="code-preview">
+                            <pre><code class="javascript">function UserForm() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  return (
+    &lt;form&gt;
+      &lt;input
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+      /&gt;
+      &lt;input
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+      /&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- [Rest of the content sections...] -->
+            </section>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Reveal.js
+            Reveal.initialize({
+                hash: true,
+                margin: 0.1,
+                transition: 'slide', 
+                fragments: true,
+                fragmentInURL: true,
+                controls: true,
+                progress: true,
+                center: true
+            });
+
+            // Highlight.js
+            hljs.highlightAll();
+
+            // Zoom functionality
+            const codeBlocks = document.querySelectorAll('.code-preview');
+            const overlay = document.createElement('div');
+            overlay.className = 'zoom-overlay';
+            document.body.appendChild(overlay);
+
+            function toggleZoom(block) {
+                const isZoomed = block.classList.toggle('zoomed');
+                overlay.style.display = isZoomed ? 'block' : 'none';
+                block.style.cursor = isZoomed ? 'zoom-out' : 'zoom-in';
+            }
+
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    toggleZoom(block);
+                });
+            });
+
+            overlay.addEventListener('click', () => {
+                const zoomedBlock = document.querySelector('.code-preview.zoomed');
+                if (zoomedBlock) {
+                    toggleZoom(zoomedBlock);
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    const zoomedBlock = document.querySelector('.code-preview.zoomed');
+                    if (zoomedBlock) {
+                        toggleZoom(zoomedBlock);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
