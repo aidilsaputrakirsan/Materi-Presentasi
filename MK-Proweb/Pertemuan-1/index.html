@@ -22,9 +22,29 @@
             margin: 20px 0;
         }
         .custom-title {
-            font-size: 1em;
+            font-size: 1.8em;
             color: #fff;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 0.5em;
+        }
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8em;
+            color: rgba(255,255,255,0.5);
+            z-index: 1000;
+            font-style: italic;
+        }
+        .slide-heading {
+            font-size: 1.6em;
+            margin-bottom: 1em;
+        }
+        .illustration-image {
+            max-width: 80%;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         .diagram {
             background: rgba(255,255,255,0.1);
@@ -91,6 +111,7 @@
     </style>
 </head>
 <body>
+    <div class="watermark">© 2024 Aidil Saputra Kirsan</div>
     <div class="reveal">
         <div class="slides">
             <!-- Cover Slide -->
@@ -181,9 +202,11 @@
             <!-- Arsitektur Client-Server -->
             <section>
                 <section>
-                    <h2>Arsitektur Client-Server</h2>
+                    <h2 class="slide-heading">Arsitektur Client-Server</h2>
                     <div class="diagram">
-                        <img src="/api/placeholder/800/400" alt="Arsitektur Client Server">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="Database Icon" class="illustration-image">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Server Icon" class="illustration-image">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="Client Icon" class="illustration-image">
                         <p class="fragment">Alur komunikasi antara Frontend dan Backend</p>
                     </div>
                 </section>
