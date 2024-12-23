@@ -1,234 +1,305 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dasar-dasar React.js & Laravel</title>
-    <link rel="icon" href="../icon.png" type="image/png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dasar-dasar React.js & Laravel</title>
+  <link rel="icon" href="../icon.png" type="image/png">
+  
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css" id="theme">
+  
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css">
+  
+  <style>
+    :root {
+      --main-font: 'Poppins', sans-serif;
+    }
     
-    <!-- Reveal.js CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css" id="theme">
+    /* Pengaturan umum Reveal.js */
+    .reveal {
+      font-family: var(--main-font);
+      font-size: 22px;
+      color: #fff; /* Warna teks untuk tema night */
+    }
     
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Syntax highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css">
-    
-    <style>
-        :root {
-            --main-font: 'Poppins', sans-serif;
-        }
-        
-        .reveal {
-            font-family: var(--main-font);
-            font-size: 22px;
-        }
-        
-        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
-            font-family: var(--main-font);
-            text-transform: none;
-            letter-spacing: normal;
-        }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: var(--main-font);
+      text-transform: none;
+      letter-spacing: normal;
+    }
 
-        .reveal h1.title-main {
-            font-size: 52px !important;
-            font-weight: 600 !important;
-            margin-bottom: 20px !important;
-        }
-        
-        .reveal h3.title-sub {
-            font-size: 32px !important;
-            color: #FF9999 !important;
-            font-weight: 300 !important;
-        }
-        
-        .highlight-box {
-            background: rgba(255,255,255,0.08);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .illustration-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        
-        .illustration-image {
-            max-width: 80px;
-            height: auto;
-            transition: transform 0.3s ease;
-        }
-        
-        .illustration-image:hover {
-            transform: scale(1.1);
-        }
-        
-        .code-container {
-            position: relative;
-            margin: 20px 0;
-        }
-        
-        .code-preview {
-            background: #282c34;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 10px 0;
-            cursor: zoom-in;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow-x: auto;
-        }
-        
-        .code-preview:hover {
-            box-shadow: 0 0 20px rgba(255,255,255,0.1);
-        }
-        
-        .code-preview.zoomed {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80vw;
-            max-height: 80vh;
-            overflow-y: auto;
-            z-index: 1000;
-            padding: 30px;
-            cursor: zoom-out;
-        }
-        
-        .zoom-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.9);
-            z-index: 999;
-            cursor: zoom-out;
-        }
-        
-        .watermark {
-            position: fixed;
-            bottom: 15px;
-            right: 15px;
-            font-size: 12px;
-            color: rgba(255,255,255,0.3);
-            z-index: 1000;
-            font-style: italic;
-        }
-        
-        .text-left {
-            text-align: left !important;
-        }
-        
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        
-        .feature-list li {
-            margin: 10px 0;
-            line-height: 1.6;
-        }
+    .reveal h1.title-main {
+      font-size: 52px !important;
+      font-weight: 600 !important;
+      margin-bottom: 20px !important;
+    }
+    
+    .reveal h3.title-sub {
+      font-size: 32px !important;
+      color: #FF9999 !important;
+      font-weight: 300 !important;
+    }
+    
+    .highlight-box {
+      background: rgba(255,255,255,0.08);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .illustration-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+    
+    .illustration-image {
+      max-width: 80px;
+      height: auto;
+      transition: transform 0.3s ease;
+    }
+    
+    .illustration-image:hover {
+      transform: scale(1.1);
+    }
+    
+    /* Code container & preview box */
+    .code-container {
+      position: relative;
+      margin: 20px 0;
+    }
 
-        @media (max-width: 768px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-            .illustration-container {
-                flex-direction: column;
-            }
-            .reveal h1.title-main {
-                font-size: 36px !important;
-            }
-            .reveal h3.title-sub {
-                font-size: 24px !important;
-            }
-        }
-    </style>
+    /* Code block ringkas, plus "Lihat Selengkapnya" untuk buka modal */
+    .code-preview {
+      background: #282c34;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 10px 0;
+      position: relative;
+      overflow-x: auto;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0,0,0,0); /* hilangkan hover awal */
+      transition: box-shadow 0.3s ease;
+    }
+    .code-preview:hover {
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+
+    /* Paksa warna code agar tetap terlihat */
+    .code-preview pre,
+    .code-preview code {
+      background: none !important;
+      color: #fff !important;
+    }
+
+    /* Tombol "Lihat Selengkapnya" */
+    .view-full {
+      text-align: right;
+      font-size: 14px;
+      margin-top: 5px;
+      color: #ff9;
+      cursor: pointer;
+      opacity: 0.8;
+    }
+    .view-full:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    /* Watermark */
+    .watermark {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      z-index: 1000;
+      font-style: italic;
+    }
+    
+    .text-left {
+      text-align: left !important;
+    }
+    
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    
+    .feature-list li {
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+
+    /* Fragment animations */
+    .reveal .slides section .fragment.fade-up {
+      opacity: 0;
+      transform: translate3d(0, 20px, 0);
+      transition: all 0.4s ease;
+    }
+    .reveal .slides section .fragment.fade-up.visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    /* Responsif */
+    @media (max-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .illustration-container {
+        flex-direction: column;
+      }
+      .reveal h1.title-main {
+        font-size: 36px !important;
+      }
+      .reveal h3.title-sub {
+        font-size: 24px !important;
+      }
+    }
+
+    /* Modal / Popup */
+    .modal-backdrop {
+      display: none; /* tersembunyi awal */
+      position: fixed;
+      top: 0; left: 0;
+      right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-backdrop.active {
+      display: flex; /* tampilkan modal */
+    }
+
+    .modal-content {
+      background: #333;
+      color: #fff;
+      border-radius: 8px;
+      max-width: 80%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 20px;
+      position: relative;
+      box-shadow: 0 0 30px rgba(255,255,255,0.2);
+    }
+
+    .modal-content pre,
+    .modal-content code {
+      background: transparent !important;
+      color: #fff !important;
+    }
+
+    /* Tombol close modal (X) */
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      color: #aaa;
+      cursor: pointer;
+    }
+    .close-modal:hover {
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-    <div class="watermark">© 2024 Aidil Saputra Kirsan</div>
-    <div class="reveal">
-        <div class="slides">
-            <!-- Cover Slide -->
-            <section>
-                <h1 class="title-main">Dasar-dasar React.js & Laravel</h1>
-                <h3 class="title-sub">Pertemuan 2</h3>
-                <div class="highlight-box">
-                    <p><i class="fab fa-react"></i> Konsep Dasar React.js</p>
-                    <p><i class="fab fa-laravel"></i> Struktur Dasar Laravel</p>
-                    <p><i class="fas fa-code"></i> Implementasi Frontend & Backend</p>
-                </div>
-            </section>
+  <div class="watermark">© 2024 Aidil Saputra Kirsan</div>
 
-            <!-- Tujuan Pembelajaran -->
-            <section>
-                <section>
-                    <h2>Tujuan Pembelajaran</h2>
-                    <div class="highlight-box text-left">
-                        <ul class="feature-list">
-                            <li class="fragment fade-up">Memahami konsep dasar React.js (komponen, JSX, state awal)</li>
-                            <li class="fragment fade-up">Memahami struktur dasar aplikasi Laravel (MVC)</li>
-                            <li class="fragment fade-up">Membuat halaman frontend sederhana dengan React.js</li>
-                            <li class="fragment fade-up">Membuat route sederhana dan controller di Laravel untuk backend</li>
-                        </ul>
-                    </div>
-                </section>
-            </section>
+  <!-- Modal backdrop & content -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal-content" id="modalContent">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <!-- Konten code akan diinsert via JavaScript -->
+    </div>
+  </div>
 
-            <!-- React.js Basics -->
-            <section>
-                <section>
-                    <h2>React.js Basics</h2>
-                    <div class="grid-2">
-                        <div class="highlight-box">
-                            <h3><i class="fas fa-puzzle-piece"></i> Komponen</h3>
-                            <p>Potongan UI yang dapat digunakan kembali</p>
-                        </div>
-                        <div class="highlight-box">
-                            <h3><i class="fas fa-code"></i> JSX</h3>
-                            <p>Sintaks mirip HTML di dalam JavaScript</p>
-                        </div>
-                    </div>
-                    <div class="highlight-box fragment fade-up">
-                        <h3><i class="fas fa-database"></i> State</h3>
-                        <p>Data internal yang mempengaruhi tampilan komponen</p>
-                    </div>
-                </section>
+  <div class="reveal">
+    <div class="slides">
 
-                <section>
-                    <h2>Contoh Komponen React</h2>
-                    <div class="code-container">
-                        <div class="code-preview">
-                            <pre><code class="javascript">function Welcome(props) {
+      <!-- Cover Slide -->
+      <section>
+        <h1 class="title-main">Dasar-dasar React.js & Laravel</h1>
+        <h3 class="title-sub">Pertemuan 2</h3>
+        <div class="highlight-box">
+          <p><i class="fab fa-react"></i> Konsep Dasar React.js</p>
+          <p><i class="fab fa-laravel"></i> Struktur Dasar Laravel</p>
+          <p><i class="fas fa-code"></i> Implementasi Frontend & Backend</p>
+        </div>
+      </section>
+
+      <!-- Tujuan Pembelajaran -->
+      <section>
+        <section>
+          <h2>Tujuan Pembelajaran</h2>
+          <div class="highlight-box text-left">
+            <ul class="feature-list">
+              <li class="fragment fade-up">Memahami konsep dasar React.js (komponen, JSX, state awal)</li>
+              <li class="fragment fade-up">Memahami struktur dasar aplikasi Laravel (MVC)</li>
+              <li class="fragment fade-up">Membuat halaman frontend sederhana dengan React.js</li>
+              <li class="fragment fade-up">Membuat route sederhana dan controller di Laravel untuk backend</li>
+            </ul>
+          </div>
+        </section>
+      </section>
+
+      <!-- React.js Basics -->
+      <section>
+        <section>
+          <h2>React.js Basics</h2>
+          <div class="grid-2">
+            <div class="highlight-box">
+              <h3><i class="fas fa-puzzle-piece"></i> Komponen</h3>
+              <p>Potongan UI yang dapat digunakan kembali</p>
+            </div>
+            <div class="highlight-box">
+              <h3><i class="fas fa-code"></i> JSX</h3>
+              <p>Sintaks mirip HTML di dalam JavaScript</p>
+            </div>
+          </div>
+          <div class="highlight-box fragment fade-up">
+            <h3><i class="fas fa-database"></i> State</h3>
+            <p>Data internal yang mempengaruhi tampilan komponen</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>Contoh Komponen React</h2>
+          <div class="code-container">
+            <div class="code-preview">
+              <pre><code class="javascript">function Welcome(props) {
   return (
     &lt;div className="welcome"&gt;
       &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;
       &lt;p&gt;Welcome to our app!&lt;/p&gt;
     &lt;/div&gt;
   );
-}</code></pre>
-                        </div>
-                    </div>
-                </section>
+}
+</code></pre>
+              <div class="view-full">Lihat Selengkapnya</div>
+            </div>
+          </div>
+        </section>
 
-                <section>
-                    <h2>State Management</h2>
-                    <div class="code-container">
-                        <div class="code-preview">
-                            <pre><code class="javascript">import { useState } from 'react';
+        <section>
+          <h2>State Management</h2>
+          <div class="code-container">
+            <div class="code-preview">
+              <pre><code class="javascript">import { useState } from 'react';
 
 function Counter() {
   const [count, setCount] = useState(0);
@@ -241,62 +312,66 @@ function Counter() {
       &lt;/button&gt;
     &lt;/div&gt;
   );
-}</code></pre>
-                        </div>
-                    </div>
-                </section>
-            </section>
+}
+</code></pre>
+              <div class="view-full">Lihat Selengkapnya</div>
+            </div>
+          </div>
+        </section>
+      </section>
 
-            <!-- Laravel Basics -->
-            <section>
-                <section>
-                    <h2>Laravel Basics (MVC)</h2>
-                    <div class="grid-2">
-                        <div class="highlight-box">
-                            <h3><i class="fas fa-database"></i> Model</h3>
-                            <ul class="feature-list">
-                                <li>Representasi data</li>
-                                <li>Interaksi dengan database</li>
-                                <li>Logika bisnis</li>
-                            </ul>
-                        </div>
-                        <div class="highlight-box">
-                            <h3><i class="fas fa-desktop"></i> View</h3>
-                            <ul class="feature-list">
-                                <li>Tampilan untuk user</li>
-                                <li>Template Blade</li>
-                                <li>Response JSON untuk API</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="highlight-box fragment fade-up">
-                        <h3><i class="fas fa-cogs"></i> Controller</h3>
-                        <ul class="feature-list">
-                            <li>Mengatur alur aplikasi</li>
-                            <li>Memproses request</li>
-                            <li>Mengembalikan response</li>
-                        </ul>
-                    </div>
-                </section>
+      <!-- Laravel Basics -->
+      <section>
+        <section>
+          <h2>Laravel Basics (MVC)</h2>
+          <div class="grid-2">
+            <div class="highlight-box">
+              <h3><i class="fas fa-database"></i> Model</h3>
+              <ul class="feature-list">
+                <li>Representasi data</li>
+                <li>Interaksi dengan database</li>
+                <li>Logika bisnis</li>
+              </ul>
+            </div>
+            <div class="highlight-box">
+              <h3><i class="fas fa-desktop"></i> View</h3>
+              <ul class="feature-list">
+                <li>Tampilan untuk user</li>
+                <li>Template Blade</li>
+                <li>Response JSON untuk API</li>
+              </ul>
+            </div>
+          </div>
+          <div class="highlight-box fragment fade-up">
+            <h3><i class="fas fa-cogs"></i> Controller</h3>
+            <ul class="feature-list">
+              <li>Mengatur alur aplikasi</li>
+              <li>Memproses request</li>
+              <li>Mengembalikan response</li>
+            </ul>
+          </div>
+        </section>
 
-                <section>
-                    <h2>Routing di Laravel</h2>
-                    <div class="code-container">
-                        <div class="code-preview">
-                            <pre><code class="php">// routes/api.php
+        <section>
+          <h2>Routing di Laravel</h2>
+          <div class="code-container">
+            <div class="code-preview">
+              <pre><code class="php">// routes/api.php
 Route::get('/users', [UserController::class, 'index']);
 Route::post('/users', [UserController::class, 'store']);
 Route::put('/users/{id}', [UserController::class, 'update']);
-Route::delete('/users/{id}', [UserController::class, 'destroy']);</code></pre>
-                        </div>
-                    </div>
-                </section>
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
+</code></pre>
+              <div class="view-full">Lihat Selengkapnya</div>
+            </div>
+          </div>
+        </section>
 
-                <section>
-                    <h2>Controller Example</h2>
-                    <div class="code-container">
-                        <div class="code-preview">
-                            <pre><code class="php">class UserController extends Controller
+        <section>
+          <h2>Controller Example</h2>
+          <div class="code-container">
+            <div class="code-preview">
+              <pre><code class="php">class UserController extends Controller
 {
     public function index()
     {
@@ -309,85 +384,101 @@ Route::delete('/users/{id}', [UserController::class, 'destroy']);</code></pre>
         $user = User::create($request->all());
         return response()->json($user, 201);
     }
-}</code></pre>
-                        </div>
-                    </div>
-                </section>
-            </section>
+}
+</code></pre>
+              <div class="view-full">Lihat Selengkapnya</div>
+            </div>
+          </div>
+        </section>
+      </section>
 
-            <!-- Integration -->
-            <section>
-                <h2>Integrasi Frontend-Backend</h2>
-                <div class="highlight-box text-left">
-                    <h3>Alur Kerja:</h3>
-                    <ul class="feature-list">
-                        <li class="fragment fade-up">React Component membuat HTTP request ke Laravel endpoint</li>
-                        <li class="fragment fade-up">Laravel Controller memproses request</li>
-                        <li class="fragment fade-up">Controller mengembalikan response JSON</li>
-                        <li class="fragment fade-up">React Component memperbarui UI berdasarkan response</li>
-                    </ul>
-                </div>
-            </section>
-
+      <!-- Integration -->
+      <section>
+        <h2>Integrasi Frontend-Backend</h2>
+        <div class="highlight-box text-left">
+          <h3>Alur Kerja:</h3>
+          <ul class="feature-list">
+            <li class="fragment fade-up">React Component membuat HTTP request ke Laravel endpoint</li>
+            <li class="fragment fade-up">Laravel Controller memproses request</li>
+            <li class="fragment fade-up">Controller mengembalikan response JSON</li>
+            <li class="fragment fade-up">React Component memperbarui UI berdasarkan response</li>
+          </ul>
         </div>
+      </section>
+
     </div>
+  </div>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Reveal.js
-            Reveal.initialize({
-                hash: true,
-                margin: 0.1,
-                transition: 'slide', 
-                fragments: true,
-                fragmentInURL: true,
-                controls: true,
-                progress: true,
-                center: true
-            });
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Inisialisasi Reveal.js
+      Reveal.initialize({
+        hash: true,
+        margin: 0.1,
+        transition: 'slide', 
+        fragments: true,
+        fragmentInURL: true,
+        controls: true,
+        progress: true,
+        center: true
+      });
 
-            // Highlight.js
-            hljs.highlightAll();
+      // Jalankan highlight.js
+      hljs.highlightAll();
 
-            // Zoom functionality
-            const codeBlocks = document.querySelectorAll('.code-preview');
-            const overlay = document.createElement('div');
-            overlay.className = 'zoom-overlay';
-            document.body.appendChild(overlay);
+      // Modal
+      const modalBackdrop = document.getElementById('modalBackdrop');
+      const modalContent  = document.getElementById('modalContent');
+      const closeModalBtn = document.getElementById('closeModal');
 
-            function toggleZoom(block) {
-                const isZoomed = block.classList.toggle('zoomed');
-                overlay.style.display = isZoomed ? 'block' : 'none';
-                block.style.cursor = isZoomed ? 'zoom-out' : 'zoom-in';
-            }
+      // Fungsi menutup modal
+      function closeModal() {
+        modalBackdrop.classList.remove('active');
+        // Hapus isi lama modal agar tidak menumpuk
+        modalContent.querySelectorAll('pre, h4').forEach(el => el.remove());
+      }
 
-            codeBlocks.forEach(block => {
-                block.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    toggleZoom(block);
-                });
-            });
+      // Tutup modal saat klik X
+      closeModalBtn.addEventListener('click', closeModal);
 
-            overlay.addEventListener('click', () => {
-                const zoomedBlock = document.querySelector('.code-preview.zoomed');
-                if (zoomedBlock) {
-                    toggleZoom(zoomedBlock);
-                }
-            });
+      // Tutup modal jika klik area luar (backdrop)
+      modalBackdrop.addEventListener('click', (e) => {
+        if (e.target === modalBackdrop) {
+          closeModal();
+        }
+      });
 
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    const zoomedBlock = document.querySelector('.code-preview.zoomed');
-                    if (zoomedBlock) {
-                        toggleZoom(zoomedBlock);
-                    }
-                }
-            });
+      // Tutup modal dengan ESC
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modalBackdrop.classList.contains('active')) {
+          closeModal();
+        }
+      });
+
+      // Tangani "Lihat Selengkapnya"
+      const viewFullBtns = document.querySelectorAll('.view-full');
+      viewFullBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Cari .code-preview terdekat
+          const parentPreview = btn.closest('.code-preview');
+          if (!parentPreview) return;
+
+          // Clone <h4> (jika ada) & <pre> agar ditampilkan di modal
+          const heading = parentPreview.querySelector('h4')?.cloneNode(true);
+          const codeBlock = parentPreview.querySelector('pre')?.cloneNode(true);
+
+          // Masukkan ke dalam modalContent
+          if (heading) modalContent.appendChild(heading);
+          if (codeBlock) modalContent.appendChild(codeBlock);
+
+          // Tampilkan modal
+          modalBackdrop.classList.add('active');
         });
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>

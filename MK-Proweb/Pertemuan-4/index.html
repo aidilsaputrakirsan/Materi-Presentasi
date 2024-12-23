@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pertemuan 4: API & Integrasi</title>
+  <link rel="icon" href="../icon.png" type="image/png">
+  
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css" id="theme">
+  
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css">
+  
+  <style>
+    :root {
+      --main-font: 'Poppins', sans-serif;
+    }
+
+    /* Pengaturan dasar Reveal.js */
+    .reveal {
+      font-family: var(--main-font);
+      font-size: 22px;
+      color: #fff;
+    }
+
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: var(--main-font);
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+    .reveal h1.title-main {
+      font-size: 52px !important;
+      font-weight: 600 !important;
+      margin-bottom: 20px !important;
+    }
+    
+    .reveal h3.title-sub {
+      font-size: 32px !important;
+      color: #FF9999 !important;
+      font-weight: 300 !important;
+    }
+    
+    .highlight-box {
+      background: rgba(255,255,255,0.08);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .illustration-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .illustration-image {
+      max-width: 100px;
+      height: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .illustration-image:hover {
+      transform: scale(1.1);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .feature-list li {
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+
+    .text-left {
+      text-align: left !important;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .illustration-container {
+        flex-direction: column;
+      }
+      .reveal h1.title-main {
+        font-size: 36px !important;
+      }
+      .reveal h3.title-sub {
+        font-size: 24px !important;
+      }
+    }
+
+    /* Code previews => pakai "Lihat Selengkapnya" (modal) */
+    .code-container {
+      position: relative;
+      margin: 20px 0;
+    }
+
+    .code-preview {
+      background: #282c34;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 10px 0;
+      position: relative;
+      overflow-x: auto;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+    }
+    .code-preview:hover {
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+    .code-preview pre,
+    .code-preview code {
+      background: none !important;
+      color: #fff !important;
+    }
+
+    /* Tombol "Lihat Selengkapnya" */
+    .view-full {
+      text-align: right;
+      font-size: 14px;
+      margin-top: 5px;
+      color: #ff9;
+      cursor: pointer;
+      opacity: 0.8;
+    }
+    .view-full:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .watermark {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      z-index: 1000;
+      font-style: italic;
+    }
+
+    /* Modal / Popup */
+    .modal-backdrop {
+      display: none; /* awalnya tersembunyi */
+      position: fixed;
+      top: 0; left: 0;
+      right: 0; bottom: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-backdrop.active {
+      display: flex; /* tampilkan modal */
+    }
+
+    .modal-content {
+      background: #333;
+      color: #fff;
+      border-radius: 8px;
+      max-width: 80%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 20px;
+      position: relative;
+      box-shadow: 0 0 30px rgba(255,255,255,0.2);
+    }
+    .modal-content pre,
+    .modal-content code {
+      background: transparent !important;
+      color: #fff !important;
+    }
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      color: #aaa;
+      cursor: pointer;
+    }
+    .close-modal:hover {
+      color: #fff;
+    }
+
+    /* Fragment animations */
+    .reveal .slides section .fragment.fade-up {
+      opacity: 0;
+      transform: translate3d(0, 20px, 0);
+      transition: all 0.4s ease;
+    }
+    .reveal .slides section .fragment.fade-up.visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  </style>
+</head>
+<body>
+  <!-- Watermark -->
+  <div class="watermark">© 2024 Aidil Saputra Kirsan</div>
+
+  <!-- Modal backdrop & content -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal-content" id="modalContent">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <!-- Konten code akan diinsert via JavaScript -->
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="slides">
+      <!-- SLIDE 1: Cover -->
+      <section>
+        <h1 class="title-main">API &amp; Integrasi</h1>
+        <h3 class="title-sub">Pertemuan 4</h3>
+        <div class="highlight-box">
+          <p><i class="fas fa-network-wired"></i> Membangun RESTful API di Laravel</p>
+          <p><i class="fas fa-plug"></i> Menangani CORS</p>
+          <p><i class="fab fa-react"></i> Mengakses Data API di React</p>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: Konsep Dasar & Ilustrasi -->
+      <section>
+        <section>
+          <h2>Konsep Dasar API</h2>
+          <div class="highlight-box text-left">
+            <p class="fragment fade-up"><strong>API</strong> adalah "jembatan" yang menghubungkan <em>frontend</em> dan <em>backend</em>.</p>
+            <p class="fragment fade-up">Bayangkan sebuah <strong>restoran</strong>:
+              <ul class="fragment fade-up">
+                <li>Frontend = “Pelayan”</li>
+                <li>Backend = “Dapur”</li>
+                <li>API = “Lembar Pesanan” untuk komunikasi</li>
+              </ul>
+            </p>
+            <p class="fragment fade-up">Dengan API, <em>frontend</em> bisa meminta data, <em>backend</em> menyiapkan &amp; mengirim respons JSON.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>Mengapa Integrasi Penting?</h2>
+          <div class="highlight-box text-left">
+            <ul class="feature-list">
+              <li class="fragment fade-up"><strong>Pemisahan Tanggung Jawab:</strong> Tim frontend &amp; backend dapat bekerja paralel</li>
+              <li class="fragment fade-up"><strong>Skalabilitas:</strong> Mudah menambah fitur tanpa mengganggu keseluruhan sistem</li>
+              <li class="fragment fade-up"><strong>Debugging Terfokus:</strong> Jika API bermasalah, cek di sisi server. UI bermasalah, cek di sisi frontend</li>
+            </ul>
+          </div>
+          <div class="illustration-container fragment fade-up">
+            <div class="highlight-box">
+              <img
+                class="illustration-image"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg"
+                alt="Laravel"
+              />
+              <p><strong>Backend</strong></p>
+            </div>
+            <i class="fas fa-arrows-left-right fa-2x" style="color:#fff;"></i>
+            <div class="highlight-box">
+              <img
+                class="illustration-image"
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                alt="React"
+              />
+              <p><strong>Frontend</strong></p>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- SLIDE 3: CORS -->
+      <section>
+        <section>
+          <h2>CORS (Cross-Origin Resource Sharing)</h2>
+          <div class="highlight-box text-left">
+            <p class="fragment fade-up">Masalah umum saat <em>frontend</em> dan <em>backend</em> berjalan di domain/port berbeda (mis. <code>localhost:5173</code> vs <code>localhost:8000</code>).</p>
+            <p class="fragment fade-up">Browser memblokir permintaan lintas domain jika tidak diizinkan lewat konfigurasi CORS.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>Konfigurasi CORS di Laravel</h2>
+          <div class="code-container">
+            <div class="code-preview">
+<pre><code class="php">
+// app/Http/Middleware/HandleCors.php
+
+protected function configureOptions(): void
+{
+    $this->options = [
+        'allowedOrigins' => ['http://localhost:5173'],
+        'allowedMethods' => ['*'],
+        'allowedHeaders' => ['*'],
+    ];
+}
+</code></pre>
+              <div class="view-full">Lihat Selengkapnya</div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Contoh config/cors.php</h2>
+          <div class="code-container">
+            <div class="code-preview">
+<pre><code class="php">
+// config/cors.php
+return [
+    'paths' => ['api/*'],
+    'allowed_origins' => ['*'],
+    'allowed_methods' => ['*'],
+    'allowed_headers' => ['*'],
+    'exposed_headers' => [],
+    'max_age' => 0,
+    'supports_credentials' => false,
+];
+</code></pre>
+              <div class="view-full">Lihat Selengkapnya</div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- SLIDE 4: Membuat RESTful API di Laravel -->
+      <section>
+        <section>
+          <h2>Rute API (routes/api.php)</h2>
+          <div class="highlight-box text-left">
+            <p>Membuat endpoint untuk <code>/posts</code>, misalnya:</p>
+          </div>
+          <div class="code-container">
+            <div class="code-preview">
+<pre><code class="php">// routes/api.php
+use App\Http\Controllers\PostController;
+
+Route::get('/posts', [PostController::class, 'index']);
+Route::post('/posts', [PostController::class, 'store']);
+</code></pre>
+              <div class="view-full">Lihat Selengkapnya</div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>PostController</h2>
+          <div class="code-container">
+            <div class="code-preview">
+<pre><code class="php">
+// app/Http/Controllers/PostController.php
+
+public function index()
+{
+    $posts = Post::orderBy('created_at', 'desc')->get();
+    return response()->json($posts);
+}
+
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'title' => 'required|max:255',
+        'content' => 'required'
+    ]);
+
+    $post = Post::create($validated);
+    return response()->json($post, 201);
+}
+</code></pre>
+              <div class="view-full">Lihat Selengkapnya</div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- SLIDE 5: Mengambil Data di React -->
+      <section>
+        <section>
+          <h2>Mengambil Data di React</h2>
+          <div class="highlight-box text-left">
+            <p class="fragment fade-up">Gunakan <code>fetch()</code> untuk memanggil endpoint <code>http://localhost:8000/api/posts</code>.</p>
+            <p class="fragment fade-up">Tampilkan <em>loading</em> saat proses, <em>error</em> jika gagal, dan daftar post jika sukses.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>Contoh Fetch Data</h2>
+          <div class="code-container">
+            <div class="code-preview">
+<pre><code class="javascript">// src/App.jsx
+import { useState, useEffect } from 'react';
+
+function App() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const ambilData = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/posts');
+        if (!response.ok) throw new Error('Gagal mengambil data');
+        
+        const data = await response.json();
+        setPosts(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    ambilData();
+  }, []);
+
+  if (loading) return <div>Memuat data...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  return (
+    <div>
+      <h1>Daftar Postingan</h1>
+      {posts.map(post => (
+        <div key={post.id}>
+          <h2>{post.title}</h2>
+          <p>{post.content}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default App;
+</code></pre>
+              <div class="view-full">Lihat Selengkapnya</div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- SLIDE TERAKHIR: Referensi & Motivasi -->
+      <section>
+        <h2>Referensi &amp; Motivasi</h2>
+        <div class="highlight-box text-left">
+          <ul class="feature-list">
+            <li class="fragment fade-up"><a href="https://laravel.com/docs/api" target="_blank">Dokumentasi API Laravel</a></li>
+            <li class="fragment fade-up"><a href="https://developer.mozilla.org/id/docs/Web/API/Fetch_API" target="_blank">Panduan Fetch API</a></li>
+            <li class="fragment fade-up"><a href="https://web.dev/cross-origin-resource-sharing" target="_blank">Tutorial CORS</a></li>
+          </ul>
+          <p class="fragment fade-up">
+            <em>
+              <strong>“API adalah jembatan antara frontend &amp; backend—pastikan jembatan itu kokoh agar data dapat mengalir tanpa hambatan!”</strong>
+            </em>
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Inisialisasi Reveal.js
+      Reveal.initialize({
+        hash: true,
+        margin: 0.1,
+        transition: 'slide', 
+        fragments: true,
+        fragmentInURL: true,
+        controls: true,
+        progress: true,
+        center: true
+      });
+
+      // Jalankan highlight.js
+      hljs.highlightAll();
+
+      // Modal "Lihat Selengkapnya"
+      const modalBackdrop = document.getElementById('modalBackdrop');
+      const modalContent  = document.getElementById('modalContent');
+      const closeModalBtn = document.getElementById('closeModal');
+
+      // Fungsi tutup modal
+      function closeModal() {
+        modalBackdrop.classList.remove('active');
+        // Hapus isi modal agar tidak menumpuk
+        modalContent.querySelectorAll('pre, h4').forEach(el => el.remove());
+      }
+
+      // Tutup modal via tombol X
+      closeModalBtn.addEventListener('click', closeModal);
+
+      // Tutup modal jika klik backdrop di luar konten
+      modalBackdrop.addEventListener('click', (e) => {
+        if (e.target === modalBackdrop) {
+          closeModal();
+        }
+      });
+
+      // Tutup modal dengan ESC
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modalBackdrop.classList.contains('active')) {
+          closeModal();
+        }
+      });
+
+      // Tangani "Lihat Selengkapnya"
+      const viewFullBtns = document.querySelectorAll('.view-full');
+      viewFullBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const parentPreview = btn.closest('.code-preview');
+          if (!parentPreview) return;
+
+          // Clone <pre> (serta <h4> jika ada)
+          const heading   = parentPreview.querySelector('h4')?.cloneNode(true);
+          const codeBlock = parentPreview.querySelector('pre')?.cloneNode(true);
+
+          // Masukkan ke modalContent
+          if (heading) modalContent.appendChild(heading);
+          if (codeBlock) modalContent.appendChild(codeBlock);
+
+          // Tampilkan modal
+          modalBackdrop.classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
