@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pertemuan 6: Autentikasi (Login &amp; Register)</title>
+  <link rel="icon" href="../icon.png" type="image/png">
+
+  <!-- Reveal.js CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css" id="theme">
+
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Syntax highlighting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css">
+
+<style>
+  :root {
+    --main-font: 'Poppins', sans-serif;
+  }
+
+  /* Pengaturan umum Reveal.js */
+  .reveal {
+    font-family: var(--main-font);
+    font-size: 22px;
+    color: #fff;
+  }
+
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+    font-family: var(--main-font);
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  .reveal h1.title-main {
+    font-size: 52px !important;
+    font-weight: 600 !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .reveal h3.title-sub {
+    font-size: 32px !important;
+    color: #FF9999 !important;
+    font-weight: 300 !important;
+  }
+  
+  .highlight-box {
+    background: rgba(255,255,255,0.08);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .illustration-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+  }
+
+  .illustration-image {
+    max-width: 100px;
+    height: auto;
+    transition: transform 0.3s ease;
+  }
+  .illustration-image:hover {
+    transform: scale(1.1);
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .feature-list li {
+    margin: 10px 0;
+    line-height: 1.6;
+  }
+
+  .text-left {
+    text-align: left !important;
+  }
+
+  /* Responsif */
+  @media (max-width: 768px) {
+    .grid-2 {
+      grid-template-columns: 1fr;
+    }
+    .illustration-container {
+      flex-direction: column;
+    }
+    .reveal h1.title-main {
+      font-size: 36px !important;
+    }
+    .reveal h3.title-sub {
+      font-size: 24px !important;
+    }
+  }
+
+  /* Code previews => pakai "Lihat Selengkapnya" (modal) */
+  .code-container {
+    position: relative;
+    margin: 20px 0;
+  }
+  .code-preview {
+    background: #282c34;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 10px 0;
+    position: relative;
+    overflow-x: auto;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+  }
+  .code-preview:hover {
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+  }
+  .code-preview pre,
+  .code-preview code {
+    background: none !important;
+    color: #fff !important;
+  }
+
+  .view-full {
+    text-align: right;
+    font-size: 14px;
+    margin-top: 5px;
+    color: #ff9;
+    cursor: pointer;
+    opacity: 0.8;
+  }
+  .view-full:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
+  .watermark {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    z-index: 1000;
+    font-style: italic;
+  }
+
+  /* Modal / Popup */
+  .modal-backdrop {
+    display: none; /* awalnya tersembunyi */
+    position: fixed;
+    top: 0; left: 0;
+    right: 0; bottom: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-backdrop.active {
+    display: flex; /* tampilkan modal */
+  }
+
+  .modal-content {
+    background: #333;
+    color: #fff;
+    border-radius: 8px;
+    max-width: 80%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 0 30px rgba(255,255,255,0.2);
+  }
+  .modal-content pre,
+  .modal-content code {
+    background: transparent !important;
+    color: #fff !important;
+  }
+  .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    color: #aaa;
+    cursor: pointer;
+  }
+  .close-modal:hover {
+    color: #fff;
+  }
+
+  /* Fragment animations */
+  .reveal .slides section .fragment.fade-up {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+    transition: all 0.4s ease;
+  }
+  .reveal .slides section .fragment.fade-up.visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+</style>
+
+</head>
+<body>
+    <!-- Watermark -->
+    <div class="watermark">© 2024 Aidil Saputra Kirsan</div> 
+
+ <!-- Modal backdrop & content -->
+ <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal-content" id="modalContent">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <!-- Konten code akan diinsert via JavaScript -->
+    </div>
+  </div>
+
+  <!-- Container utama Reveal.js, tidak termasuk style CSS -->
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: Cover -->
+      <section>
+        <h1 class="title-main">Autentikasi (Login &amp; Register)</h1>
+        <h3 class="title-sub">Pertemuan 6</h3>
+        <div class="highlight-box">
+          <p><i class="fas fa-key"></i> Token Auth</p>
+          <p><i class="fas fa-lock"></i> Backend Auth</p>
+          <p><i class="fas fa-user-circle"></i> Frontend Auth</p>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: Tujuan Pembelajaran -->
+      <section>
+        <section>
+          <h2>Tujuan Pembelajaran</h2>
+          <div class="highlight-box text-left">
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Tujuan</th>
+                  <th>Indikator</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Token Auth</td>
+                  <td>Memahami autentikasi berbasis token (JWT/Sanctum)</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Backend Auth</td>
+                  <td>Membuat endpoint login &amp; register di Laravel</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Frontend Auth</td>
+                  <td>Implementasi halaman login/register di React</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <!-- SLIDE 3: Bagian Backend (Setup Sanctum) -->
+      <section>
+        <section>
+          <h2>Backend: Setup Laravel Sanctum</h2>
+          <div class="highlight-box text-left">
+            <p>Pastikan database sudah terkonfigurasi sebelum instalasi Sanctum.</p>
+            <p>Instal &amp; publikasi konfigurasi, lalu update <code>app/Http/Kernel.php</code> untuk middleware.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>Contoh Kernel.php</h2>
+          <div class="code-container">
+            <div class="code-preview">
+<pre><code class="php">
+// app/Http/Kernel.php (potongan)
+
+// [1] Middleware untuk API
+'api' => [
+    // [2] Pastikan request dari frontend tercakup EnsureFrontendRequestsAreStateful
+    \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+    'throttle:api',
+    \Illuminate\Routing\Middleware\SubstituteBindings::class,
+],
+</code></pre>
+              <div class="view-full">Lihat Selengkapnya</div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- SLIDE 4: Implement Auth Endpoints -->
+      <section>
+        <section>
+          <h2>Implementasi Endpoint Auth</h2>
+          <div class="highlight-box text-left">
+            <p class="fragment fade-up">
+              Tambahkan route <code>/register</code>, <code>/login</code>, dan proteksi <code>/logout</code> dengan <em>auth:sanctum</em>.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2>routes/api.php</h2>
+          <div class="code-container">
+            <div class="code-preview">
+<pre><code class="php">
+// routes/api.php
+
+use App\Http\Controllers\AuthController;
+
+// [1] Endpoint untuk register
+Route::post('/register', [AuthController::class, 'register']);
+// [2] Endpoint untuk login
+Route::post('/login', [AuthController::class, 'login']);
+// [3] Endpoint logout, pakai auth:sanctum agar hanya user login yg bisa akses
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+</code></pre>
+              <div class="view-full">Lihat Selengkapnya</div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Contoh AuthController</h2>
+          <div class="code-container">
+            <div class="code-preview">
+<pre><code class="php">// app/Http/Controllers/AuthController.php
+
+// [1] Pakai Hash untuk verifikasi password
+// [2] Pakai Sanctum untuk buat token
+// [3] Pastikan model User sudah siap
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
+class AuthController extends Controller
+{
+    // [A] Method register: validasi input, buat user, generate token
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            // [A.1] Hash password sebelum disimpan
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        // [A.2] Buat token via Sanctum
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Registration successful',
+            'user' => $user,
+            'token' => $token
+        ], 201);
+    }
+
+    // [B] Method login: cek user & password, lalu generate token
+    public function login(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+
+        // [B.1] Cari user by email
+        $user = User::where('email', $validated['email'])->first();
+
+        // [B.2] Jika user ga ketemu / pass salah => 401
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
+            return response()->json([
+                'message' => 'Invalid credentials'
+            ], 401);
+        }
+
+        // [B.3] Jika sukses, buat token
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Login successful',
+            'user' => $user,
+            'token' => $token
+        ]);
+    }
+
+    // [C] Method logout: hapus token aktif user
+    public function logout(Request $request)
+    {
+        // [C.1] Hapus token yang sedang digunakan
+        $request->user()->currentAccessToken()->delete();
+        
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
+    }
+}
+</code></pre>
+              <div class="view-full">Lihat Selengkapnya</div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- SLIDE 5: Bagian Frontend (React.js Auth Pages) -->
+      <section>
+        <section>
+          <h2>Frontend: Halaman Login &amp; Register</h2>
+          <div class="highlight-box text-left">
+            <p class="fragment fade-up">
+              Kita akan membuat <code>Register.jsx</code> dan <code>Login.jsx</code> untuk menangani form input user.
+            </p>
+            <p class="fragment fade-up">
+              Token hasil login akan disimpan di <code>localStorage</code> agar user tetap login.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2>Register.jsx (Contoh Baris per Baris)</h2>
+          <div class="code-container">
+            <div class="code-preview">
+<pre><code class="javascript">// src/pages/Register.jsx
+
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+function Register() {
+  // [1] Gunakan useNavigate utk redirect
+  const navigate = useNavigate();
+
+  // [2] State formData utk menampung input user
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: ''
+  });
+
+  // [3] State utk menampung error dari server / validasi
+  const [error, setError] = useState(null);
+
+  // [4] handleChange => update formData saat user input
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // [5] handleSubmit => kirim form ke backend
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+
+    try {
+      // [5.1] Panggil endpoint register
+      const response = await fetch('http://localhost:8000/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        // [5.2] Stringify data form
+        body: JSON.stringify(formData),
+      });
+
+      // [5.3] Parse response
+      const data = await response.json();
+
+      // [5.4] Jika gagal (response.ok false), lempar error
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed');
+      }
+
+      // [5.5] Simpan token ke localStorage
+      localStorage.setItem('token', data.token);
+
+      // [5.6] Redirect ke halaman home ("/")
+      navigate('/');
+    } catch (err) {
+      // [5.7] Tampilkan pesan error
+      setError(err.message);
+    }
+  };
+
+  return (
+    <div>
+      <h2>Register</h2>
+      {error && <div>{error}</div>}
+      <form onSubmit={handleSubmit}>
+        {/* Input Name */}
+        <label>Name</label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+        />
+        
+        {/* Input Email */}
+        <label>Email</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+
+        {/* Input Password */}
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+        />
+
+        {/* Input Confirm Password */}
+        <label>Confirm Password</label>
+        <input
+          type="password"
+          name="password_confirmation"
+          value={formData.password_confirmation}
+          onChange={handleChange}
+        />
+
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  );
+}
+
+export default Register;
+</code></pre>
+              <div class="view-full">Lihat Selengkapnya</div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2>Login.jsx (Contoh Baris per Baris)</h2>
+          <div class="code-container">
+            <div class="code-preview">
+<pre><code class="javascript">// src/pages/Login.jsx
+
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+function Login() {
+  // [1] Gunakan useNavigate utk redirect
+  const navigate = useNavigate();
+
+  // [2] State formData utk menampung email & password
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+
+  // [3] State utk menangani error
+  const [error, setError] = useState(null);
+
+  // [4] Update formData saat user mengetik
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // [5] Saat submit form
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+
+    try {
+      // [5.1] Kirim request POST ke /api/login
+      const response = await fetch('http://localhost:8000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      // [5.2] Dapatkan data dari response
+      const data = await response.json();
+
+      // [5.3] Jika tidak ok, lempar error
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
+
+      // [5.4] Simpan token
+      localStorage.setItem('token', data.token);
+
+      // [5.5] Redirect ke halaman home
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  return (
+    <div>
+      <h2>Login</h2>
+      {error && <div>{error}</div>}
+      <form onSubmit={handleSubmit}>
+        {/* Input Email */}
+        <label>Email</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+
+        {/* Input Password */}
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+        />
+
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  );
+}
+
+export default Login;
+</code></pre>
+              <div class="view-full">Lihat Selengkapnya</div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- SLIDE 6: Update Routes (React) -->
+      <section>
+        <h2>Update Routes (React)</h2>
+        <div class="code-container">
+          <div class="code-preview">
+<pre><code class="javascript">// src/routes.jsx (contoh tambahan)
+
+// [1] Import halaman Register & Login
+import Register from './pages/Register';
+import Login from './pages/Login';
+
+// [2] Di dalam <Routes> tambahkan path /register dan /login
+<Routes>
+  <Route path="/register" element={<Register />} />
+  <Route path="/login" element={<Login />} />
+  {/* route lainnya */}
+</Routes>
+</code></pre>
+            <div class="view-full">Lihat Selengkapnya</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE Terakhir: Referensi & Motivasi -->
+      <section>
+        <h2>Referensi &amp; Motivasi</h2>
+        <div class="highlight-box text-left">
+          <ul>
+            <li><a href="https://laravel.com/docs/sanctum" target="_blank">Laravel Sanctum Documentation</a></li>
+            <li><a href="https://reactjs.org/docs/security.html" target="_blank">React Auth Best Practices</a></li>
+            <li><a href="https://owasp.org" target="_blank">Web Security Guidelines (OWASP)</a></li>
+          </ul>
+          <p><em><strong>"Security adalah prioritas utama dalam autentikasi. Jangan skip langkah validasi dan security measures!"</strong></em></p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Inisialisasi Reveal.js
+      Reveal.initialize({
+        hash: true,
+        margin: 0.1,
+        transition: 'slide',
+        fragments: true,
+        fragmentInURL: true,
+        controls: true,
+        progress: true,
+        center: true
+      });
+
+      // Jalankan highlight.js
+      hljs.highlightAll();
+
+      // --- Modal "Lihat Selengkapnya" ---
+      const modalBackdrop = document.getElementById('modalBackdrop');
+      const modalContent  = document.getElementById('modalContent');
+      const closeModalBtn = document.getElementById('closeModal');
+
+      // Fungsi tutup modal
+      function closeModal() {
+        modalBackdrop.classList.remove('active');
+        // Hapus isi modal agar tidak menumpuk
+        modalContent.querySelectorAll('pre, h4').forEach(el => el.remove());
+      }
+
+      // Tutup modal via tombol X
+      closeModalBtn.addEventListener('click', closeModal);
+
+      // Tutup modal jika klik area luar konten
+      modalBackdrop.addEventListener('click', (e) => {
+        if (e.target === modalBackdrop) {
+          closeModal();
+        }
+      });
+
+      // Tutup modal dengan ESC
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modalBackdrop.classList.contains('active')) {
+          closeModal();
+        }
+      });
+
+      // Tangani "Lihat Selengkapnya"
+      const viewFullBtns = document.querySelectorAll('.view-full');
+      viewFullBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const parentPreview = btn.closest('.code-preview');
+          if (!parentPreview) return;
+
+          // Clone <pre> (serta <h4> jika ada)
+          const heading   = parentPreview.querySelector('h4')?.cloneNode(true);
+          const codeBlock = parentPreview.querySelector('pre')?.cloneNode(true);
+
+          // Masukkan ke modalContent
+          if (heading) modalContent.appendChild(heading);
+          if (codeBlock) modalContent.appendChild(codeBlock);
+
+          // Tampilkan modal
+          modalBackdrop.classList.add('active');
+        });
+      });
+    });
+  </script>
+
+
+</body>
+</html>
